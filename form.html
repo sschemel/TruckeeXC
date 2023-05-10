@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cross Country Signup Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    form {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      width: 80%;
+      max-width: 600px;
+    }
+    h1, h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .form-container {
+      display: flex;
+    }
+    .column {
+      flex: 1;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    .form-container input, .form-container textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script>
+    function validateEmail(email) {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    }
+    function validatePhoneNumber(phoneNumber) {
+      const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // This checks for a 10-digit phone number in the format xxx-xxx-xxxx
+      return phoneRegex.test(phoneNumber);
+    }
+    function validateForm(e) {
+      const form = document.forms["studentForm"];
+      const studentName = form["studentName"].value;
+      const studentEmail = form["studentEmail"].value;
+      const studentContact = form["studentContact"].value;
+      const parent1Name = form["parent1Name"].value;
+      const parent1Email = form["parent1Email"].value;
+      const parent1Contact = form["parent1Contact"].value;
+
+      // Example validation: Ensure student name is not empty
+      if (studentName.trim() === "") {
+        alert("Student Name must not be empty.");
+        e.preventDefault();
+        return false;
+      }
+      // Example validation: Ensure parent1 name is not empty
+      if (parent1Name.trim() === "") {
+        alert("Parent Name must not be empty.");
+        e.preventDefault();
+        return false;
+      }
+      // Validate student email format
+      if (!validateEmail(studentEmail)) {
+        alert("Student Email must be properly formatted.");
+        e.preventDefault();
+        return false;
+      }
+      // Validate parent 1 email format
+      if (!validateEmail(parent1Email)) {
+        alert("Parent 1 Email must be properly formatted.");
+        e.preventDefault();
+        return false;
+      }
+      // Validate student phone number format
+      if (!validatePhoneNumber(studentContact)) {
+        alert("Student Phone Number must be a 10-digit number.");
+        e.preventDefault();
+        return false;
+      }
+      // Validate parent 1 phone number format
+      if (!validatePhoneNumber(parent1Contact)) {
+        alert("Parent 1 Phone Number must be a 10-digit number.");
+        e.preventDefault();
+        return false;
+      }
+
+      // Add more validation checks as needed
+
+      // If all validation passes, the form will be submitted
+      return true;
+    }
+  </script>
+</head>
+<body>
+  <form action="https://your-worker-url.workers.dev" method="post">
+    <h1>XC Student Signup Form</h1>
+    <div class="form-container">
+      <div class="column">
+        <h2>Student Details:</h2>
+        <label for="studentName">Full Name:</label>
+        <input type="text" name="studentName" required><br>
+        <label for="studentEmail">Email:</label>
+        <input type="email" name="studentEmail" required><br>
+        <label for="studentPhone">Phone Number (format: 555-333-4444):</label>
+        <input type="tel" name="studentPhone" id="studentPhone" pattern="\d{3}-\d{3}-\d{4}" required><br>
+        <label for="motivation">Why do you want to run cross country and what are your goals?</label><br>
+        <textarea name="motivation" rows="4" cols="50" required></textarea><br>
+      </div>
+      <div class="column">
+        <h2>Parent/Guardian Details:</h2>
+        <label for="parent1Name">Parent 1 Full Name:</label>
+        <input type="text" name="parent1Name" required><br>
+        <label for="parent1Email">Parent 1 Email:</label>
+        <input type="email" name="parent1Email" required><br>
+        <label for="parent1Contact">Parent 1 Phone Number (format: 555-333-4444):</label>
+        <input type="tel" name="parent1Contact" id="parent1Contact" pattern="\d{3}-\d{3}-\d{4}" required><br>
+        <label for="parent2Name">Parent 2 Full Name:</label>
+        <input type="text" name="parent2Name"><br>
+        <label for="parent2Email">Parent 2 Email:</label>
+        <input type="email" name="parent2Email"><br>
+        <label for="parent2Contact">Parent 2 Phone Number (format: 555-333-4444):</label>
+        <input type="tel" name="parent2Contact" id="parent2Contact" pattern="\d{3}-\d{3}-\d{4}"><br>
+      
+      </div>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
