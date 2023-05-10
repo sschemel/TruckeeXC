@@ -168,8 +168,8 @@
         <input type="text" name="studentName" required><br>
         <label for="studentEmail" class="required">Email:</label>
         <input type="email" name="studentEmail" required><br>
-        <label for="studentPhone" class="required">Phone Number (format: 555-333-4444):</label>
-        <input type="tel" name="studentPhone" id="studentPhone" pattern="\d{3}-\d{3}-\d{4}" required><br>
+        <label for="studentPhone" class="required">Phone Number (format: 5553334444):</label>
+        <input type="tel" name="studentPhone" id="studentPhone" pattern="\d{3}-?\d{3}-?\d{4}" required><br>       
         <label for="motivation" class="required">Why do you want to run cross country and what are your goals?</label><br>
         <textarea name="motivation" rows="4" cols="50" required></textarea><br>
       </div>
@@ -179,15 +179,15 @@
         <input type="text" name="parent1Name" required><br>
         <label for="parent1Email" class="required">Parent 1 Email:</label>
         <input type="email" name="parent1Email" required><br>
-        <label for="parent1Contact" class="required">Parent 1 Phone Number (format: 555-333-4444):</label>
-        <input type="tel" name="parent1Contact" id="parent1Contact" pattern="\d{3}-\d{3}-\d{4}" required><br>
+        <label for="parent1Contact" class="required">Parent 1 Phone Number (format: 5553334444):</label>
+        <input type="tel" name="parent1Contact" id="parent1Contact" pattern="\d{3}-?\d{3}-?\d{4}" required><br>        
         <label for="parent2Name">Parent 2 Full Name:</label>
         <input type="text" name="parent2Name"><br>
         <label for="parent2Email">Parent 2 Email:</label>
         <input type="email" name="parent2Email"><br>
-        <label for="parent2Contact">Parent 2 Phone Number (format: 555-333-4444):</label>
-        <input type="tel" name="parent2Contact" id="parent2Contact" pattern="\d{3}-\d{3}-\d{4}"><br>
-      </div>
+        <label for="parent2Contact">Parent 2 Phone Number (format: 5553334444):</label>
+        <input type="tel" name="parent2Contact" id="parent2Contact" pattern="\d{3}-?\d{3}-?\d{4}"><br>
+       </div>
     </div>
     <button type="submit">Submit</button>
   </form>
