@@ -30,6 +30,10 @@
             margin-bottom: 20px;
         }
 
+        .label-bold {
+            font-weight: bold;
+        }
+
         .form-container {
             display: flex;
             flex-wrap: wrap;
@@ -120,7 +124,7 @@
         .flex-row {
             display: flex;
             justify-content: space-between;
-                       align-items: center;
+            align-items: center;
         }
 
         .flex-row>div {
@@ -136,58 +140,86 @@
         .day {
             text-align: center;
         }
+
+        .time-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     </style>
     <script>
+        function validateCheckboxes() {
+            const checkboxes = document.querySelectorAll('input[name="preferredTime"]');
+            const errorMessage = document.getElementById('errorMessage');
+            let isChecked = false;
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    isChecked = true;
+                    break;
+                }
+            }
+
+            if (isChecked) {
+                errorMessage.style.display = 'none'; // hide error message
+            } else {
+                errorMessage.style.display = 'block'; // show error message
+            }
+            return isChecked;
+        }
+
         function validateForm(e) {
-    const form = document.forms["studentForm"];
-    const studentName = form["studentName"].value;
-    const commitDays = form["commitDays"].value;
-    const commitMinutes = form["commitMinutes"].value;
-    const trainingTime = form["trainingTime"].value;
+            const form = document.forms["studentForm"];
+            const studentName = form["studentName"].value;
+            const commitDays = form["commitDays"].value;
+            const commitMinutes = form["commitMinutes"].value;
 
-    if (studentName.trim() === "") {
-        alert("Student Name must not be empty.");
-        e.preventDefault();
-        return false;
-    }
+            if (studentName.trim() === "") {
+                alert("Student Name must not be empty.");
+                e.preventDefault();
+                return false;
+            }
 
-    if (commitDays === "") {
-        alert("# of Days Committed must be selected.");
-        e.preventDefault();
-        return false;
-    }
+            if (commitDays === "") {
+                alert("# of Days Committed must be selected.");
+                e.preventDefault();
+                return false;
+            }
 
-    if (commitMinutes === "") {
-        alert("# of Minutes per day must be selected.");
-        e.preventDefault();
-        return false;
-    }
+            if (commitMinutes === "") {
+                alert("# of Minutes per day must be selected.");
+                e.preventDefault();
+                return false;
+            }
 
-    if (trainingTime === "") {
-        alert("Preferred Training Time must be selected.");
-        e.preventDefault();
-        return false;
-    }
+            // Check if time is selected
+            if (!validateCheckboxes()) {
+                e.preventDefault();
+                return false;
+            }
 
-    // Add more validation checks as needed
-
-    // If all validation passes, the form will be submitted
-    return true;
+            // If all validation passes, the form will be submitted
+            return true;
         }
     </script>
 </head>
 
 <body>
-    <form action="https://dbupdatesignup.stratenschemel.workers.dev" method="post" onsubmit="return validateForm(event)">
+    <form name="studentForm" action="https://summersignup.stratenschemel.workers.dev" method="post" onsubmit="return validateForm(event)">
+
+
         <div class="form-container">
             <div class="column">
-                <h2>Summer Training Sign-up:</h2>
-                <label for="studentName" class="required">Student Name:</label>
+                <label for="studentName" class="required label-bold">Student Name:</label>
                 <input type="text" id="studentName" name="studentName" required>
 
                 <div class="flex-row">
                     <div>
-                        <label for="commitDays" class="required"># of Days Committed:</label>
+                        <label for="commitDays" class="required label-bold"># of Days Committed:</label>
                         <select id="commitDays" name="commitDays" required>
                             <option value="" selected>Select</option>
                             <option value="3-4">3-4</option>
@@ -197,7 +229,7 @@
                         </select>
                     </div>
                     <div>
-                        <label for="commitMinutes" class="required"># of Minutes per day:</label>
+                        <label for="commitMinutes" class="required label-bold"># of Minutes per day:</label>
                         <select id="commitMinutes" name="commitMinutes" required>
                             <option value="" selected>Select</option>
                             <option value="30">30</option>
@@ -208,14 +240,14 @@
                     </div>
                 </div>
 
-                <div class="flex-training-row">
+                <div class="flex-training-row label-bold">
                     <p>Participating in other summer training programs:</p>
                     <div class="checkbox-wrapper">
                         <input type="checkbox" id="otherPrograms" name="otherPrograms" value="Yes">
                     </div>
                 </div>
 
-                <label for="trainingDays">Days Available for In-person Training:</label>
+                <label for="trainingDays" class="label-bold">Days Available for In-person Training:</label>
                 <div class="days-row">
                     <!-- Repeat for other days -->
                     <div class="day">
@@ -233,7 +265,8 @@
                     <div class="day">
                         <div>Thurs</div>
                         <input type="checkbox" id="thursday" name="trainingDays" value="Thurs">
-                    </div>                    <div class="day">
+                    </div>
+                    <div class="day">
                         <div>Fri</div>
                         <input type="checkbox" id="friday" name="trainingDays" value="Fri">
                     </div>
@@ -241,19 +274,33 @@
                         <div>Sat</div>
                         <input type="checkbox" id="saturday" name="trainingDays" value="Sat">
                     </div>
-                    <div class="day">
-                        <div>Sun</div>
-                        <input type="checkbox" id="sunday" name="trainingDays" value="Sun">
+                  <div class="day">
+                    <div>Sun</div>
+                    <input type="checkbox" id="sunday" name="trainingDays" value="Sun">
+                  </div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="form-container">
+            <div class="column">
+                <label class="required label-bold">Preferred Training Time:</label>
+                <!-- Hidden input for validation message -->
+                <div id="errorMessage" style="color: red; display: none;">Preferred Training Time must be selected.</div>
+                <div class="time-row">
+                    <div class="time">
+                        <label for="morning">Morning</label>
+                        <input type="checkbox" id="morning" name="preferredTime" value="Morning" onchange="validateCheckboxes()">
+                    </div>
+                    <div class="time">
+                        <label for="afternoon">Afternoon</label>
+                        <input type="checkbox" id="afternoon" name="preferredTime" value="Afternoon" onchange="validateCheckboxes()">
+                    </div>
+                    <div class="time">
+                        <label for="evening">Evening</label>
+                        <input type="checkbox" id="evening" name="preferredTime" value="Evening" onchange="validateCheckboxes()">
                     </div>
                 </div>
-
-                <label for="trainingTime" class="required">Preferred Training Time:</label>
-                <select id="trainingTime" name="trainingTime" required>
-                    <option value="" selected>Select</option>
-                    <option value="Morning">Morning</option>
-                    <option value="Afternoon">Afternoon</option>
-                    <option value="Evening">Evening</option>
-                </select>
             </div>
         </div>
         <button type="submit">Submit</button>
